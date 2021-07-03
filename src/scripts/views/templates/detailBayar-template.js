@@ -7,6 +7,10 @@ const hitungJtp = (tgl_awal, tenor) => {
   return jtp;
 }
 
+const ribuan = (x) => {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const createDataBayarTemplate = (nasabah,dataBayar) => {
    const angsuran = nasabah.nasabah[0].angsuran;
   const tenor = nasabah.nasabah[0].tenor;
@@ -83,29 +87,31 @@ for(let i = 0; i < dataBayar.bayar.length; i++) {
   
   let inner = `
   <tr>
-    <td colspan="5">Tanggal Pencairan : ${tgl_pk}</td>
+    <td>Nama : ${nasabah.nasabah[0].nama}</td>
+    <td colspan="3">Tanggal Pencairan : ${tgl_pk}</td>
   </tr>
   <tr>
-    <td colspan="5">Tanggal Jatuh Tempo : ${tgl_awal}</td>
+    <td colspan="2">Angsuran : ${ribuan(angsuran)}</td>
   </tr>
   <tr>
-    <td colspan="5">Angsuran : ${angsuran}</td>
+    <td colspan="2">Tenor : ${tenor}</td>
   </tr>
   <tr>
-    <td colspan="5">Tenor : ${tenor}</td>
-  </tr>
-  <tr>
-    <td>No</td>
-    <td width='100px'>Tanggal JTP</td>
-    <td width='100px'>Tanggal Bayar</td>
+    <td rowspan='2'>No</td>
+    <td rowspan='2'width='100px'>Tanggal JTP</td>
+    <td rowspan='2'width='100px'>Tanggal Bayar</td>
+    <td colspan='4'>Pembayaran</td>
+    <td rowspan='2'>Uraian</td>
+    <td rowspan='2'>keterangan</td>
+    <td rowspan='2'>Nominal Denda</td>
+    </tr>
+    <tr>
     <td>Pokok</td>
     <td>Bunga</td>
-    <td>Pembayaran</td>
     <td>Denda</td>
-    <td>Uraian</td>
-    <td>Keterlambatan</td>
-    <td>Nominal Denda</td>
-    </tr>`;
+    <td>Total</td>
+  </tr>
+    `;
     
   let totalDenda = 0;
   let bayarDenda = 0;
@@ -155,13 +161,13 @@ for(let i = 0; i < dataBayar.bayar.length; i++) {
         <td>${i+1}</td>
         <td>${jtp}</td>
         <td>${bayar}</td>
-        <td>${pokok}</td>
-        <td>${bunga}</td>
-        <td>${pokok+bunga+denda}</td>
-        <td>${denda}</td>
+        <td>${ribuan(pokok)}</td>
+        <td>${ribuan(bunga)}</td>
+        <td>${ribuan(denda)}</td>
+        <td>${ribuan(pokok+bunga+denda)}</td>
         <td>${uraian}</td>
         <td>${hariDenda} hari</td>
-        <td>${nomDenda}</td>
+        <td>${ribuan(nomDenda)}</td>
       </tr>
       `;
       // <td>${moment(datBayar[i].bayar.tanggal).format('YYYY-MM-DD')}</td>
@@ -169,13 +175,13 @@ for(let i = 0; i < dataBayar.bayar.length; i++) {
   // console.log(`${moment(datBayar[1].bayar.tanggal).format('YYYY-MM-DD')}`);
   return inner + `
   <tr>
-    <td colspan = '5'>Bayar Denda = ${bayarDenda}</td>
+    <td colspan = '3'>Bayar Denda = ${ribuan(bayarDenda)}</td>
   </tr>
   <tr>
-  <td colspan = '5'>Total Denda = ${totalDenda}</td>
+  <td colspan = '3'>Total Denda = ${ribuan(totalDenda)}</td>
   </tr>
   <tr>
-  <td colspan = '5'>Sisa Denda = ${totalDenda-bayarDenda}</td>
+  <td colspan = '3'>Sisa Denda = ${ribuan(totalDenda-bayarDenda)}</td>
   </tr>
   
   `;

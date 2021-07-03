@@ -1,19 +1,16 @@
 const createAllNasabahTemplate = (book) => `
-<div class="col s12 m4">
-    <h2 class="header">Horizontal Card</h2>
-    <div class="card">
-      <div class="card-stacked">
-        <div class="card-content">
-          <p>${book.no_pkcab}</p>
-          <p>${book.nama}</p>
+<div class="col s12 m6">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">${book.no_pkcab} - ${book.nama}</span>
           <p>${book.alamat}</p>
         </div>
         <div class="card-action">
-          <a href="#detail/${book.no_pkcab}">This is a link</a>
+          <a href="#detail/${book.no_pkcab}">Detail</a>
+          <a href="#">This is a link</a>
         </div>
       </div>
     </div>
-  </div>
 `;
 
 export {createAllNasabahTemplate};
