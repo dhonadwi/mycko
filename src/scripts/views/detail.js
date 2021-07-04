@@ -3,8 +3,8 @@ import createDataBayarTemplate from "./templates/detailBayar-template";
 const detailPage = {
   async render() {
     return `
-    <h3>Detail Nasabah</h3>
-    <table id='content' class='centered'>
+    <h5>Detail Nasabah</h5>
+    <table id='content'>
     </table>
     `
   },

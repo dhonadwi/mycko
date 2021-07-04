@@ -12,34 +12,13 @@ const ribuan = (x) => {
 }
 
 const createDataBayarTemplate = (nasabah,dataBayar) => {
+  console.log(nasabah.nasabah[0]);
    const angsuran = nasabah.nasabah[0].angsuran;
   const tenor = nasabah.nasabah[0].tenor;
   const tgl_awal = moment(nasabah.nasabah[0].tgl_awal).format('YYYY-MM-DD');
   const tgl_pk = moment(nasabah.nasabah[0].tgl_pk).format('YYYY-MM-DD');;
   const tgl_jtp = hitungJtp(tgl_awal,tenor);
-//   const hisBayar = {};
-//   const hisPokok = {};
-//   const hisBunga = {};
-//   const hisUraian = {};
-//   const hisDenda = {}
-//   //menyimpan histori transaksi
-//   for(let i = 0; i < dataBayar.bayar.length; i++) {
-//     const angBayar = dataBayar.bayar[i].pokok+dataBayar.bayar[i].bunga;
-//     hisBayar[i+1] = moment(dataBayar.bayar[i].tanggal).format('YYYY-MM-DD');
-//     hisPokok[i+1] = dataBayar.bayar[i].pokok;
-//     hisBunga[i+1] = dataBayar.bayar[i].bunga;
-//     hisUraian[i+1] = dataBayar.bayar[i].uraian;
-//     hisDenda[i+1] = dataBayar.bayar[i].denda;
-//     if(angBayar>angsuran) {
-//       let loop = angBayar/angsuran;
-//       for (let a = 1; a<=loop; a++){
-//         hisPokok[i+a+1] = 'sudah bayar';
-//         hisUraian[i+a+1] = 'sudah bayar';
-//       }
-//     }
-//   };
-// console.log(hisUraian);
-// console.log(hisPokok);
+
 const hisBayar = [];
 const hisPokok = [];
 const hisBunga = [];
@@ -82,25 +61,27 @@ for(let i = 0; i < dataBayar.bayar.length; i++) {
     }
   };
 
-  console.log(datBayar);
+  // console.log(datBayar);
   const lenDatBayar = Object.keys(datBayar).length;
-  
+  const headInner = `
+  `;
   let inner = `
   <tr>
-    <td>Nama : ${nasabah.nasabah[0].nama}</td>
-    <td colspan="3">Tanggal Pencairan : ${tgl_pk}</td>
-  </tr>
-  <tr>
-    <td colspan="2">Angsuran : ${ribuan(angsuran)}</td>
-  </tr>
-  <tr>
-    <td colspan="2">Tenor : ${tenor}</td>
+    <td colspan="10">Nama : ${nasabah.nasabah[0].nama} | ${nasabah.nasabah[0].no_pk} | ${nasabah.nasabah[0].no_register} (${nasabah.nasabah[0].anggota})</td>
+    </tr>
+    <tr>
+    <td colspan="10">Alamat : ${nasabah.nasabah[0].alamat}, ${nasabah.nasabah[0].kec_domi} | M: ${nasabah.nasabah[0].nm_marketing}</td>
+    </tr>
+    <tr>
+    <td colspan="3">Angsuran : ${ribuan(angsuran)}</td>
+    <td colspan="3">Tenor : ${tenor}</td>
+    <td colspan="3">Plafond : ${ribuan(nasabah.nasabah[0].plafond)}</td>
   </tr>
   <tr>
     <td rowspan='2'>No</td>
     <td rowspan='2'width='100px'>Tanggal JTP</td>
     <td rowspan='2'width='100px'>Tanggal Bayar</td>
-    <td colspan='4'>Pembayaran</td>
+    <td colspan='4' class='centered'>Pembayaran</td>
     <td rowspan='2'>Uraian</td>
     <td rowspan='2'>keterangan</td>
     <td rowspan='2'>Nominal Denda</td>
@@ -116,8 +97,15 @@ for(let i = 0; i < dataBayar.bayar.length; i++) {
   let totalDenda = 0;
   let bayarDenda = 0;
   let sisaDenda = 0;
-  for(let i=0; i< tenor; i++) {
-    console.log(datBayar[tenor].denda);
+  // for(let i=0; i< tenor; i++) {
+    let cek =0;
+    if (hisBayar.length > tenor) {
+      cek = hisBayar.length;
+    } else {
+      cek = tenor;
+    } 
+  for(let i=0; i < cek; i++) {
+    // console.log(datBayar[tenor].denda);
     let jtp = '';
     let bayar ='';
     let pokok = 0;
@@ -175,13 +163,13 @@ for(let i = 0; i < dataBayar.bayar.length; i++) {
   // console.log(`${moment(datBayar[1].bayar.tanggal).format('YYYY-MM-DD')}`);
   return inner + `
   <tr>
-    <td colspan = '3'>Bayar Denda = ${ribuan(bayarDenda)}</td>
+    <td colspan = '5'>Bayar Denda = ${ribuan(bayarDenda)}</td>
   </tr>
   <tr>
-  <td colspan = '3'>Total Denda = ${ribuan(totalDenda)}</td>
+  <td colspan = '5'>Total Denda = ${ribuan(totalDenda)}</td>
   </tr>
   <tr>
-  <td colspan = '3'>Sisa Denda = ${ribuan(totalDenda-bayarDenda)}</td>
+  <td colspan = '5'>Sisa Denda = ${ribuan(totalDenda-bayarDenda)}</td>
   </tr>
   
   `;

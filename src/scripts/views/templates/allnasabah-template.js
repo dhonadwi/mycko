@@ -7,7 +7,6 @@ const createAllNasabahTemplate = (book) => `
         </div>
         <div class="card-action">
           <a href="#detail/${book.no_pkcab}">Detail</a>
-          <a href="#">This is a link</a>
         </div>
       </div>
     </div>
