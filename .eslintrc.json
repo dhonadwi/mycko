@@ -11,12 +11,8 @@
         "ecmaVersion": 12,
         "sourceType": "module"
     },
-    "rules": {
-        "no-console": 0,
-        "no-restricted-globals": [
-            "error",
-            "event",
-            "fdescribe"
-        ]
-    }
+    "eslintIgnore": [
+        "scripts/materialize.min.js"
+    ],
+    "rules": {}
 }
