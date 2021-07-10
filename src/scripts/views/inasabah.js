@@ -14,13 +14,17 @@ const iNasabah = {
 
   async afterRender() {
     const inputPk = document.querySelector('#nopk');
+    inputPk.focus();
     const btnCari = document.querySelector('#btnCari');
     inputPk.addEventListener('keyup', async (event) => {
       if (event.keyCode === 13) {
         const nasabah = await BukshelfDbSource.getDetailNasabah(inputPk.value);
-        // const bayar = await BukshelfDbSource.getDetailBayar(id[1]);
-        const nasabahContainer = document.querySelector('#content');
-        nasabahContainer.innerHTML += createAllNasabahTemplate(nasabah.data.nasabah[0]);
+        if (nasabah.status === 'fail') {
+          alert('nasabah tidak ada');
+        } else {
+          const nasabahContainer = document.querySelector('#content');
+          nasabahContainer.innerHTML += createAllNasabahTemplate(nasabah.data.nasabah[0]);
+        }
       }
     })
     // btnCari.addEventListener('click', async () => {

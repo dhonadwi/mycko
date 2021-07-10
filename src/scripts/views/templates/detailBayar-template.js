@@ -103,6 +103,7 @@ const createDataBayarTemplate = (nasabah, dataBayar) => {
   } else {
     cek = tenor;
   }
+  let tgl_nunggak = [];
   for (let i = 0; i < cek; i++) {
     // console.log(datBayar[tenor].denda);
     let jtp = '';
@@ -124,6 +125,9 @@ const createDataBayarTemplate = (nasabah, dataBayar) => {
       bayar = datBayar[i].bayar;
       hariDenda = (new Date(bayar) - new Date(datBayar[i].jtp)) / 86400000;
     };
+    if (datBayar[i].bayar === undefined) {
+      tgl_nunggak.push(datBayar[i].jtp);
+    }
     if (datBayar[i].pokok != undefined) {
       pokok = datBayar[i].pokok;
     }
@@ -159,13 +163,14 @@ const createDataBayarTemplate = (nasabah, dataBayar) => {
       `;
     // <td>${moment(datBayar[i].bayar.tanggal).format('YYYY-MM-DD')}</td>
   }
+  // console.log(tgl_nunggak);
   // console.log(`${moment(datBayar[1].bayar.tanggal).format('YYYY-MM-DD')}`);
   return inner + `
   <tr>
     <td colspan = '10'>Bayar Denda = ${ribuan(bayarDenda)}</td>
   </tr>
   <tr>
-  <td colspan = '10'>Total Denda = ${ribuan(totalDenda)}</td>
+  <td colspan = '10'>Total Denda = ${ribuan(totalDenda)} Tanggal Nunggak = ${tgl_nunggak[0]}</td>
   </tr>
   <tr>
   <td colspan = '10'>Sisa Denda = ${ribuan(totalDenda - bayarDenda)}</td>

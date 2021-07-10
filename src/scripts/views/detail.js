@@ -5,7 +5,7 @@ const detailPage = {
   async render() {
     return `
     <h5>Detail Nasabah</h5>
-    <div id="content">
+    <div id="content" class='logo'>
    
     </table>
     </div>
@@ -22,13 +22,7 @@ const detailPage = {
     container.innerHTML = await createDataBayarTemplate(nasabah.data, bayar.data);
     document.querySelector('#btnPrint').addEventListener('click', () => {
       printDiv('content');
-    })
-    // document.querySelector('#cek').addEventListener('click', () => {
-    //   document.getElementById('content').style.fontSize = "6px";
-    //   // document.getElementById('content').style.padding = "0";
-    //   // document.getElementById('content').style.margin = "0";
-    // })
-
+    });
   }
 };
 

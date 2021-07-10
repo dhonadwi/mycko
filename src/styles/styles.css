@@ -5,6 +5,10 @@ body {
   min-height: 100vh;
   flex-direction: column;
 }
+.logo {
+  /* background-image: url('https://ksucipta.org/logo/ksp-bw.png');  */
+  /* opacity: 0.4; */
+}
 
 main {
   flex: 1 0 auto;
